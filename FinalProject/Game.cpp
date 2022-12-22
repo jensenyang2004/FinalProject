@@ -629,7 +629,8 @@ void Game :: event(int a){
             }
         }
     }else if(a == 3){
-                Progress.Lock(1209);
+        lock();
+        Progress.Lock(1209);
         if(Progress.lock){
             Progress.key = true;
         }
@@ -637,24 +638,74 @@ void Game :: event(int a){
         
     }else if(a == 5){
         Progress.Photo(5);
+        //photo();
     }else if(a == 6){
         Progress.Photo(6);
+        //photo();
     }else if(a == 7){
         Progress.Photo(7);
+        //photo();
     }
 }
 
 void Game :: lock(){
-    SDL_Surface* tmpsurface = IMG_Load("");
+    
+    TTF_Font* font = TTF_OpenFont("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 25);
+    SDL_Color textColor = {0, 0, 0, 255};
+    SDL_Surface* tmpsurface = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/locking.png");
     SDL_Surface* number[4];
-    char* number1 = "0";
+    char* number1 = "1";
     number[0] = TTF_RenderText_Solid(font, number1, textColor);
-    char* number2 = "0";
+    char* number2 = "2";
     number[1]  = TTF_RenderText_Solid(font, number2, textColor);
-    char* number3 = "0";
+    char* number3 = "3";
     number[2]  = TTF_RenderText_Solid(font, number2, textColor);
-    char* number4 = "0";
+    char* number4 = "4";
     number[3]  = TTF_RenderText_Solid(font, number2, textColor);
     
+    SDL_Rect lock_rect = {256, 0, 768, 768};
+    SDL_Texture* lock_image = SDL_CreateTextureFromSurface(renderer, tmpsurface);
+    
+    SDL_Texture* number_image[4];
+    number_image[0] = SDL_CreateTextureFromSurface(renderer, number[0]);
+    number_image[1] = SDL_CreateTextureFromSurface(renderer, number[1]);
+    number_image[2] = SDL_CreateTextureFromSurface(renderer, number[2]);
+    number_image[3] = SDL_CreateTextureFromSurface(renderer, number[3]);
+
+    SDL_Rect number_rect[4];
+    number_rect[0] = {739, 297, 25, 50};
+    number_rect[1] = {739, 362, 25, 50};
+    number_rect[2] = {739, 427, 25, 50};
+    number_rect[3] = {739, 492, 25, 50};
+
+    bg[background_index-1].change_background(renderer);
+    SDL_RenderCopy(renderer, lock_image, NULL, &lock_rect);
+    SDL_RenderCopy(renderer, number_image[0], NULL, &number_rect[0]);
+    SDL_RenderCopy(renderer, number_image[1], NULL, &number_rect[1]);
+    SDL_RenderCopy(renderer, number_image[2], NULL, &number_rect[2]);
+    SDL_RenderCopy(renderer, number_image[3], NULL, &number_rect[3]);
+    SDL_RenderPresent(renderer);
+    
+
+
+    //SDL_RenderPresent(renderer);
+    
+    
+    SDL_Event event;
+
+    while(true){
+        if(SDL_PollEvent(&event)){
+            if(SDL_KEYDOWN == event.type){
+                if(SDL_SCANCODE_SPACE == event.key.keysym.scancode){
+                    break;
+                }
+            }else if(SDL_MOUSEBUTTONDOWN == event.type){
+                int x, y;
+                SDL_GetMouseState(&x, &y);
+                
+            }
+        }
+    }
+
 
 }
