@@ -368,7 +368,7 @@ void Game :: init_background(){
     int posx_2[5] = {532, 112, 358, 532, 970};
     int posy_2[5] = {130, 261, 327, 422, 350};
     int posw_2[5] = {342, 216, 138, 452, 358};
-    int posh_2[5] = {150, 336, 240, 300, 228};
+    int posh_2[5] = {150, 336, 240, 300, 114};
 
     int length_dialogue_2[5] = {1, 2, 2, 2, 10};
     string** dialogues_2 = new string*[5];
@@ -412,6 +412,8 @@ void Game :: init_background(){
     bg[1].objects[2].init_set_index(3);
     bg[0].init_position(350, 0, 1050);
     bg[1].init_position(200, 70, 1130);
+    
+    bg[1].objects[0].init_image("");
 }
 
 void Game :: check_interaction(){
@@ -451,12 +453,12 @@ void Game :: show_dialogue(object& objects){
             }
         }
     }
-//    if(objects.has_image){
-//        interaction = true;
-//        SDL_Surface* textSurface = TTF_RenderText_Solid(font, "", textColor);
-//        textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-//        show_image(objects);
-//    }
+    if(objects.has_image){
+        interaction = true;
+        SDL_Surface* textSurface = TTF_RenderText_Solid(font, "", textColor);
+        textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+        show_image(objects);
+    }
     
     if(objects.has_event){
         event(objects.plot_determine);
@@ -684,7 +686,7 @@ void Game :: photo(){
     SDL_Surface* photos[3];
     photos[0] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/photo3.png");
     photos[1] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/photo2.png");
-    photos[2] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/photo3.png");
+    photos[2] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/photo1.png");
     photo = SDL_CreateTextureFromSurface(renderer, photos[Progress.photo_amount-1]);
     SDL_Rect photo_rect = {256, 0, 768, 768};
     bg[background_index-1].change_background(renderer);
@@ -811,6 +813,4 @@ void Game :: lock(){
             }
         }
     }
-
-
 }

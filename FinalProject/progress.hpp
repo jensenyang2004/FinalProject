@@ -16,7 +16,7 @@ class progress{
 public:
     int lock = 630;
     bool lock_determine = false;
-    bool boo_1 = true, boo2 = true, boo3 = true;
+    bool boo_1 = false, boo2 = false, boo3 = false;
 
     bool ending = false;
     
@@ -42,17 +42,17 @@ public:
             case 5:
                 if(!boo_1)
                 photo_amount++;
-                        boo_1 = true;
+                boo_1 = true;
                 break;
             case 6:
                 if(!boo2)
                 photo_amount++;
-                        boo2 = true;
+                boo2 = true;
                 break;
             case 7:
                 if(!boo3)
                 photo_amount++;
-                        boo3 = true;
+                boo3 = true;
                 break;
             default:
                 break;
