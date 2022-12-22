@@ -70,6 +70,8 @@ public:
     void photo();
     void ending();
     
+    void disappear();
+    
 public:
     bool isRunning;
     int cnt = 0;

@@ -413,7 +413,7 @@ void Game :: init_background(){
     bg[0].init_position(350, 0, 1050);
     bg[1].init_position(200, 70, 1130);
     
-    bg[1].objects[0].init_image("");
+    bg[1].objects[0].init_set_index(8);
 }
 
 void Game :: check_interaction(){
@@ -677,7 +677,8 @@ void Game :: event(int a){
     }else if(a == 7){
         Progress.Photo(7);
         photo();
-       
+    }else if(a == 8){
+        disappear();
     }
 }
 
@@ -812,5 +813,22 @@ void Game :: lock(){
                 Progress.Lock(password);
             }
         }
+    }
+}
+
+void Game :: disappear(){
+    SDL_Surface* gone_surface[4];
+    SDL_Texture* gone_texture;
+    SDL_Rect gone_rect = {128, 0, 1024, 768};
+    gone_surface[0] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/disappear1.png");
+    gone_surface[1] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/disappear2.png");
+    gone_surface[2] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/disappear3.png");
+    gone_surface[3] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/disappear4.png");
+    for(int i = 0;i < 4;i++){
+        SDL_Delay(300);
+        gone_texture = SDL_CreateTextureFromSurface(renderer, gone_surface[i]);
+        bg[background_index-1].change_background(renderer);
+        SDL_RenderCopy(renderer, gone_texture, NULL, &gone_rect);
+        SDL_RenderPresent(renderer);
     }
 }
