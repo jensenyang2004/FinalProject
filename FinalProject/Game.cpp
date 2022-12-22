@@ -451,12 +451,12 @@ void Game :: show_dialogue(object& objects){
             }
         }
     }
-    if(objects.has_image){
-        interaction = true;
-        SDL_Surface* textSurface = TTF_RenderText_Solid(font, "", textColor);
-        textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-        show_image(objects);
-    }
+//    if(objects.has_image){
+//        interaction = true;
+//        SDL_Surface* textSurface = TTF_RenderText_Solid(font, "", textColor);
+//        textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+//        show_image(objects);
+//    }
     
     if(objects.has_event){
         event(objects.plot_determine);
@@ -619,7 +619,7 @@ void Game :: show_image(object& object){
 
 void Game :: event(int a){
     switch (a) {
-        case 2:
+        case 2{
             Progress.Ending();
             if(Progress.ending){
                 if(Progress.photo){
@@ -629,25 +629,64 @@ void Game :: event(int a){
                 }
             }
             break;
-        case 3:
+        }
+        case 3{
+            SDL_Surface* tmpsurface = IMG_Load("");
+            SDL_Surface* number[4];
+            char* number1 = "0";
+            number[0] = TTF_RenderText_Solid(font, number1, textColor);
+            char* number2 = "0";
+            number[1]  = TTF_RenderText_Solid(font, number2, textColor);
             Progress.Lock(1209);
             if(Progress.lock){
                 Progress.key = true;
             }
             break;
-        case 5:
+        }
+        case 5{
             Progress.Photo(5);
             
             break;
-        case 6:
+        }
+        case 6{
             Progress.Photo(6);
             
             break;
-        case 7:
+        }
+        case 7{
             Progress.Photo(7);
             
             break;
-        default:
-            break;
+        }
+    }
+    
+    if(a == 2){
+        Progress.Ending();
+        if(Progress.ending){
+            if(Progress.photo){
+                cout << "happy ending" << endl;
+            }else{
+                cout << "bad ending" << endl;
+            }
+        }
+    }else if(a == 3){
+        SDL_Surface* tmpsurface = IMG_Load("");
+        SDL_Surface* number[4];
+        char* number1 = "0";
+        number[0] = TTF_RenderText_Solid(font, number1, textColor);
+        char* number2 = "0";
+        number[1]  = TTF_RenderText_Solid(font, number2, textColor);
+        Progress.Lock(1209);
+        if(Progress.lock){
+            Progress.key = true;
+        }
+    }else if(a == 4){
+        
+    }else if(a == 5){
+        Progress.Photo(5);
+    }else if(a == 6){
+        Progress.Photo(6);
+    }else if(a == 7){
+        Progress.Photo(7);
     }
 }
