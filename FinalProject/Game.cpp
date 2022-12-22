@@ -618,47 +618,7 @@ void Game :: show_image(object& object){
 }
 
 void Game :: event(int a){
-    switch (a) {
-        case 2{
-            Progress.Ending();
-            if(Progress.ending){
-                if(Progress.photo){
-                    cout << "happy ending" << endl;
-                }else{
-                    cout << "bad ending" << endl;
-                }
-            }
-            break;
-        }
-        case 3{
-            SDL_Surface* tmpsurface = IMG_Load("");
-            SDL_Surface* number[4];
-            char* number1 = "0";
-            number[0] = TTF_RenderText_Solid(font, number1, textColor);
-            char* number2 = "0";
-            number[1]  = TTF_RenderText_Solid(font, number2, textColor);
-            Progress.Lock(1209);
-            if(Progress.lock){
-                Progress.key = true;
-            }
-            break;
-        }
-        case 5{
-            Progress.Photo(5);
-            
-            break;
-        }
-        case 6{
-            Progress.Photo(6);
-            
-            break;
-        }
-        case 7{
-            Progress.Photo(7);
-            
-            break;
-        }
-    }
+        
     
     if(a == 2){
         Progress.Ending();
