@@ -56,7 +56,7 @@ void Game :: init(const char* title, int xpos, int ypos, int width, int height, 
         SDL_Init(SDL_INIT_AUDIO);
         if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
             cout << "ERROR" << Mix_GetError() << std::endl;
-          bgm = Mix_LoadMUS("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/soundtrack/bgm.mp3");
+          bgm = Mix_LoadMUS("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/soundtrack/ending.mp3");
         if (bgm)
         {
            cout << "bgm is ready" << endl;
@@ -654,19 +654,20 @@ void Game :: lock(){
     SDL_Color textColor = {0, 0, 0, 255};
     SDL_Surface* tmpsurface = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/locking.png");
     SDL_Surface* number[4];
-    char* number1 = "1";
+    char number1[2] = "0";
     number[0] = TTF_RenderText_Solid(font, number1, textColor);
-    char* number2 = "2";
+    char number2[2] = "0";
     number[1]  = TTF_RenderText_Solid(font, number2, textColor);
-    char* number3 = "3";
+    char number3[2] = "0";
     number[2]  = TTF_RenderText_Solid(font, number2, textColor);
-    char* number4 = "4";
+    char number4[2] = "0";
     number[3]  = TTF_RenderText_Solid(font, number2, textColor);
     
     SDL_Rect lock_rect = {256, 0, 768, 768};
     SDL_Texture* lock_image = SDL_CreateTextureFromSurface(renderer, tmpsurface);
     
     SDL_Texture* number_image[4];
+    int number_number[4] = {0};
     number_image[0] = SDL_CreateTextureFromSurface(renderer, number[0]);
     number_image[1] = SDL_CreateTextureFromSurface(renderer, number[1]);
     number_image[2] = SDL_CreateTextureFromSurface(renderer, number[2]);
@@ -678,13 +679,7 @@ void Game :: lock(){
     number_rect[2] = {739, 427, 25, 50};
     number_rect[3] = {739, 492, 25, 50};
 
-    bg[background_index-1].change_background(renderer);
-    SDL_RenderCopy(renderer, lock_image, NULL, &lock_rect);
-    SDL_RenderCopy(renderer, number_image[0], NULL, &number_rect[0]);
-    SDL_RenderCopy(renderer, number_image[1], NULL, &number_rect[1]);
-    SDL_RenderCopy(renderer, number_image[2], NULL, &number_rect[2]);
-    SDL_RenderCopy(renderer, number_image[3], NULL, &number_rect[3]);
-    SDL_RenderPresent(renderer);
+    
     
 
 
@@ -694,6 +689,23 @@ void Game :: lock(){
     SDL_Event event;
 
     while(true){
+        number[0] = TTF_RenderText_Solid(font, number1, textColor);
+        number[1]  = TTF_RenderText_Solid(font, number2, textColor);
+        number[2]  = TTF_RenderText_Solid(font, number2, textColor);
+        number[3]  = TTF_RenderText_Solid(font, number2, textColor);
+        
+        number_image[0] = SDL_CreateTextureFromSurface(renderer, number[0]);
+        number_image[1] = SDL_CreateTextureFromSurface(renderer, number[1]);
+        number_image[2] = SDL_CreateTextureFromSurface(renderer, number[2]);
+        number_image[3] = SDL_CreateTextureFromSurface(renderer, number[3]);
+
+        bg[background_index-1].change_background(renderer);
+        SDL_RenderCopy(renderer, lock_image, NULL, &lock_rect);
+        SDL_RenderCopy(renderer, number_image[0], NULL, &number_rect[0]);
+        SDL_RenderCopy(renderer, number_image[1], NULL, &number_rect[1]);
+        SDL_RenderCopy(renderer, number_image[2], NULL, &number_rect[2]);
+        SDL_RenderCopy(renderer, number_image[3], NULL, &number_rect[3]);
+        SDL_RenderPresent(renderer);
         if(SDL_PollEvent(&event)){
             if(SDL_KEYDOWN == event.type){
                 if(SDL_SCANCODE_SPACE == event.key.keysym.scancode){
@@ -702,7 +714,29 @@ void Game :: lock(){
             }else if(SDL_MOUSEBUTTONDOWN == event.type){
                 int x, y;
                 SDL_GetMouseState(&x, &y);
-                
+                if(x >= 724 && x <= 784){
+                    if(y >= 290 && y <= 347){
+                        number_number[0]++;
+                        if(number_number[0] > 9)
+                            number_number[0] = 0;
+                        number1[0] = static_cast<char>(number_number[0] + 48);
+                    }else if(y >= 360 && y <= 413){
+                        number_number[1]++;
+                        if(number_number[1] > 9)
+                            number_number[1] = 0;
+                        number2[0] = static_cast<char>(number_number[1] + 48);
+                    }else if(y >= 423 && y <= 477){
+                        number_number[2]++;
+                        if(number_number[2] > 9)
+                            number_number[2] = 0;
+                        number3[0] = static_cast<char>(number_number[2] + 48);
+                    }else if(y >= 490 && y <= 546){
+                        number_number[3]++;
+                        if(number_number[3] > 9)
+                            number_number[3] = 0;
+                        number4[0] = static_cast<char>(number_number[3] + 48);
+                    }
+                }
             }
         }
     }
