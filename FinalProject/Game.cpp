@@ -362,8 +362,8 @@ void Game :: init_background(){
     bg[0].init_objects(3, posx, posy, posh, posw, length_dialogue_1 , dialogues_1);
     
     bg[0].objects[2].init_image("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/bowl.png");
-    bg[0].objects[0].init_set_index(2);
-
+    bg[0].objects[0].init_set_index(5);
+    bg[0].objects[1].init_set_index(2);
     
     int posx_2[5] = {532, 112, 358, 532, 970};
     int posy_2[5] = {130, 261, 327, 422, 350};
@@ -407,6 +407,9 @@ void Game :: init_background(){
     
     bg[1].init_objects(5, posx_2, posy_2, posh_2, posw_2, length_dialogue_2 , dialogues_2);
     
+    bg[1].objects[1].init_set_index(6);
+    bg[1].objects[3].init_set_index(7);
+    bg[1].objects[2].init_set_index(3);
     bg[0].init_position(350, 0, 1050);
     bg[1].init_position(200, 70, 1130);
 }
@@ -616,23 +619,33 @@ void Game :: show_image(object& object){
 
 void Game :: event(int a){
     switch (a) {
-        case 1:
-            
-            break;
         case 2:
-            
+            Progress.Ending();
+            if(Progress.ending){
+                if(Progress.photo){
+                    cout << "happy ending" << endl;
+                }else{
+                    cout << "bad ending" << endl;
+                }
+            }
             break;
         case 3:
-            
+            Progress.Lock(1209);
+            if(Progress.lock){
+                Progress.key = true;
+            }
             break;
         case 5:
             Progress.Photo(5);
+            
             break;
         case 6:
             Progress.Photo(6);
+            
             break;
         case 7:
             Progress.Photo(7);
+            
             break;
         default:
             break;

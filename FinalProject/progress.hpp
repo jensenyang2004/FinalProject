@@ -9,6 +9,8 @@
 #define progress_hpp
 
 #include <stdio.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 class progress{
 public:
@@ -29,7 +31,7 @@ public:
     }
     
     void Ending(){
-        if(key && photo){
+        if(key){
             ending = true;
         }
     }
