@@ -54,6 +54,7 @@ public:
     
     void check_interaction();
     void show_dialogue(object&);
+    void show_image(object&);
     
     void game_start_init();
     void game_start_update(bool button_key);

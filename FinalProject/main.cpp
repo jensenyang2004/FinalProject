@@ -71,20 +71,6 @@ int main(int argc, const char* argv[]){
         
         if(start_game){
             bool Keyup = false, Keydown = false, jump = false;
-//            switch (key) {
-//                case 1:
-//                    if(game -> cat_hitbox_x != game -> cat_posx){
-//                        game -> cat_hitbox_x = game -> cat_posx;
-//                    }
-//                    break;
-//                case 2:
-//                    if(game -> cat_hitbox_x != game -> cat_posx + 150){
-//                        game -> cat_hitbox_x = game -> cat_posx + 150;
-//                    }
-//                    break;
-//                default:
-//                    break;
-//            }
             game -> handleEvents();
             game -> update(false, 0);
             game -> render();

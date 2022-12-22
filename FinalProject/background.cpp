@@ -48,3 +48,9 @@ void object :: init_hitbox(int x, int y, int w, int h){
     hitbox.w = w;
     hitbox.h = h;
 }
+
+void object :: init_image(char* path){
+    has_image = true;
+    image = IMG_Load(path);
+}
+

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C84E68CC2954A083002DB5E5 /* progress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84E68CA2954A083002DB5E5 /* progress.cpp */; };
 		C84ED3B82948208900B5BCF6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84ED3B72948208900B5BCF6 /* main.cpp */; };
 		C84ED3C0294821BB00B5BCF6 /* libSDL2_image-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C84ED3BF294821BB00B5BCF6 /* libSDL2_image-2.0.0.dylib */; };
 		C84ED3C2294821C900B5BCF6 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C84ED3C1294821C900B5BCF6 /* libSDL2-2.0.0.dylib */; };
@@ -30,6 +31,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C84E68CA2954A083002DB5E5 /* progress.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = progress.cpp; sourceTree = "<group>"; };
+		C84E68CB2954A083002DB5E5 /* progress.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = progress.hpp; sourceTree = "<group>"; };
 		C84ED3B42948208900B5BCF6 /* FinalProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FinalProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		C84ED3B72948208900B5BCF6 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		C84ED3BF294821BB00B5BCF6 /* libSDL2_image-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2_image-2.0.0.dylib"; path = "../../../../opt/homebrew/Cellar/sdl2_image/2.6.2/lib/libSDL2_image-2.0.0.dylib"; sourceTree = "<group>"; };
@@ -84,6 +87,8 @@
 				C84ED3C42948227800B5BCF6 /* Game.hpp */,
 				C84ED3CB294B055A00B5BCF6 /* background.cpp */,
 				C84ED3CC294B055A00B5BCF6 /* background.hpp */,
+				C84E68CA2954A083002DB5E5 /* progress.cpp */,
+				C84E68CB2954A083002DB5E5 /* progress.hpp */,
 			);
 			path = FinalProject;
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 			files = (
 				C84ED3B82948208900B5BCF6 /* main.cpp in Sources */,
 				C84ED3CD294B055A00B5BCF6 /* background.cpp in Sources */,
+				C84E68CC2954A083002DB5E5 /* progress.cpp in Sources */,
 				C84ED3C52948227800B5BCF6 /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

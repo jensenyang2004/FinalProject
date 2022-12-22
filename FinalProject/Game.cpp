@@ -7,6 +7,7 @@
 #include <SDl2/SDL_mixer.h>
 #include <iostream>
 #include <string>
+#include "progress.hpp"
 
 #define floor 522
 
@@ -34,12 +35,15 @@ SDL_Surface* buttonsurface1 = IMG_Load("/Users/yangjingcheng/programming_workspa
 SDL_Surface* buttonsurface2 = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/button/start2.png");
 //starting menu
 
+
 Game :: Game(){
     
 }
 Game :: ~Game(){
     
 }
+
+progress Progress;
 
 void Game :: init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen){
     //Window
@@ -347,6 +351,7 @@ void Game :: init_background(){
     dialogue_1_1[0] = "Is there anything special?";
     dialogue_1_1[1] = "Oh, it's a piece of picture.";
     dialogues_1[0] = dialogue_1_1;
+    bg[0].objects[0].init_set_index(2);
     
     string* dialogue_1_2 = new string[1];
     dialogue_1_2[0] = "The door is locked...";
@@ -358,7 +363,8 @@ void Game :: init_background(){
 
     bg[0].init_objects(3, posx, posy, posh, posw, length_dialogue_1 , dialogues_1);
     
-    //
+    bg[0].objects[2].init_image("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/bowl.png");
+    
     
     int posx_2[5] = {532, 112, 358, 532, 970};
     int posy_2[5] = {130, 261, 327, 422, 350};
@@ -407,7 +413,7 @@ void Game :: init_background(){
 }
 
 void Game :: check_interaction(){
-        for(int i = 0;i < bg[background_index - 1].number_of_object;i++){
+    for(int i = 0;i < bg[background_index - 1].number_of_object;i++){
         if(bg[background_index - 1].objects[i].check_interaction(cat_posx, cat_posy)){
             show_dialogue(bg[background_index - 1].objects[i]);
         }
@@ -443,14 +449,20 @@ void Game :: show_dialogue(object& objects){
             }
         }
     }
+    if(objects.has_image){
+        interaction = true;
+        SDL_Surface* textSurface = TTF_RenderText_Solid(font, "", textColor);
+        textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+        show_image(objects);
+    }
 }
 
 void Game :: game_start_init(){
 
-    //SDL_Surface* tmpsurface = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/starting_background.jpg");
+    SDL_Surface* tmpsurface = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/starting_background.jpg");
     //SDL_Surface* tmpsurface = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/starting_background.jpg");
 
-    SDL_Surface* tmpsurface = IMG_Load("./background/starting_background.jpg");
+    //SDL_Surface* tmpsurface = IMG_Load("./background/starting_background.jpg");
     starting_background = SDL_CreateTextureFromSurface(renderer, tmpsurface);
     
     button = SDL_CreateTextureFromSurface(renderer, buttonsurface1);
@@ -478,45 +490,6 @@ bool Game :: game_check(int x, int y){
     return false;
 }
 
-//void Game :: cat_fall(int key, int index){
-//    cout << "why!!!" << endl;
-//    SDL_Delay(30);
-//    SDL_Surface* tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/cat_fall/2.png");
-//    if(key == 1){
-//        tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/cat_fall_left/2.png");
-//    }
-//    cat = SDL_CreateTextureFromSurface(renderer, tmp);
-//    while(true){
-//        SDL_Delay(30);
-//        cat_posy += 10;
-//        cat_posx += (key == 1) ? (-5) : (5);
-//        cat_hitbox_x += (key == 1) ? (-5) : (5);
-//        for(int i = 0;i < bg[background_index-1].number_of_object;i++){
-//            if(cat_hitbox_x >= bg[background_index-1].objects[i].hitbox.x
-//               && cat_hitbox_x <= bg[background_index-1].objects[i].hitbox.w + bg[background_index-1].objects[i].hitbox.x){
-//                index = i;
-//                break;
-//            }
-//        }
-//        if(index >= 0 && cat_hitbox_x >= bg[background_index-1].objects[index].hitbox.x
-//           && cat_hitbox_x <= bg[background_index-1].objects[index].hitbox.w + bg[background_index-1].objects[index].hitbox.x){
-//            if(cat_posy > bg[background_index-1].objects[index].hitbox.y){
-//                cat_posy = bg[background_index-1].objects[index].hitbox.y;
-//                cat_still(key);
-//                break;
-//            }
-//        }else{
-//            if(cat_posy > floor){
-//                cat_posy = floor;
-//                cat_still(key);
-//                break;
-//            }
-//        }
-//        update(false, 0);
-//        render();
-//    }
-//}
-
 
 bool Game :: is_falling(int key){
     switch (key) {
@@ -538,21 +511,20 @@ bool Game :: is_falling(int key){
         if(cat_hitbox_x >= bg[background_index-1].objects[i].hitbox.x
            && cat_hitbox_x <= bg[background_index-1].objects[i].hitbox.w + bg[background_index-1].objects[i].hitbox.x){
             if(cat_posy < bg[background_index-1].objects[i].hitbox.y){
-                cout << "checkpoint 1" << endl;
+                //cout << "checkpoint 1" << endl;
                 determine = false;
-                //cat_fall(key);
-            }else if(cat_posy < floor && cat_posy >  bg[background_index-1].objects[i].hitbox.y){
-                cout << "checkpoint 2" << endl;
-                determine = false;
-            }else if(cat_posy == bg[background_index-1].objects[i].hitbox.y || cat_posy == floor){
-                cout << "checkpoint 3" << endl;
-                determine = true;
-                break;
-            }
+                }else if(cat_posy < floor && cat_posy >  bg[background_index-1].objects[i].hitbox.y){
+                    //cout << "checkpoint 2" << endl;
+                    determine = false;
+                }else if(cat_posy == bg[background_index-1].objects[i].hitbox.y || cat_posy == floor){
+                    //cout << "checkpoint 3" << endl;
+                    determine = true;
+                    break;
+                }
         }
     }
     if(cat_posy == floor){
-        cout << "checkpoint 4" << endl;
+        //cout << "checkpoint 4" << endl;
         determine = true;
     }
     if(!determine){
@@ -567,9 +539,9 @@ void Game :: loading_scene(){
     SDL_Surface* tmp[3];
     tmp[0] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/loading/1.jpg");
     tmp[1] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/loading/2.jpg");
-
+    
     tmp[2] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/loading/3.jpg");
-
+    
     SDL_Texture* background;
     for(int i = 0;i < 6;i++){
         SDL_Delay(400);
@@ -580,7 +552,6 @@ void Game :: loading_scene(){
 }
 
 void Game :: cat_fall(int key){
-    cout << "why!!!" << endl;
     SDL_Delay(30);
     SDL_Surface* tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/cat_fall/2.png");
     if(key == 1){
@@ -600,7 +571,7 @@ void Game :: cat_fall(int key){
                 }
             }
         }
-
+        
         SDL_Delay(30);
         cat_posy += 10;
         cat_hitbox_x += (key == 1) ? (-5) : (5);
@@ -615,3 +586,28 @@ void Game :: cat_fall(int key){
     }
 }
 
+void Game :: show_image(object& object){
+    if(!object.has_image){
+        return;
+    }
+    dialogue_Rect =  {256, 0, 768, 768};
+    dialogue = SDL_CreateTextureFromSurface(renderer, object.image);
+    handleEvents();
+    update(false, 1);
+    render();
+    SDL_Event event;
+    while(true){
+        if(SDL_PollEvent(&event)){
+            if(SDL_KEYDOWN == event.type){
+                if(SDL_SCANCODE_SPACE == event.key.keysym.scancode){
+                    interaction = false;
+                    SDL_Surface* dialogue_box = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/dialoguebox.png");
+                    dialogue_Rect = {250, 400, 800, 200};
+                    dialogue = SDL_CreateTextureFromSurface(renderer, dialogue_box);
+                    break;
+                }
+            }
+        }
+    }
+
+}

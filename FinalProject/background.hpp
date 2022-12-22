@@ -18,11 +18,23 @@ using namespace std;
 
 struct object{
     int number_of_dialogues = 0;
+    int plot_determine = 0;
     string* dialogue = nullptr;
+    SDL_Surface* image;
+    bool has_image = false;
+    bool has_event = false;
+    void init_image(char*);
+    void show_image();
     void init_object(int posx, int posy, int posh, int posw, int length_dialogue, string* dialogue);
     bool check_interaction(int x, int y);
     void init_hitbox(int x, int y, int w, int h);
     SDL_Rect hitbox;
+    
+    void init_set_index(int a){
+        has_event = true;
+        plot_determine = a;
+    }
+
 };
 
 class background{
