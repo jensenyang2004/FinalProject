@@ -64,6 +64,11 @@ public:
     
     void loading_scene();
     
+    void lock();
+    void bowl();
+    void photo();
+    void ending();
+    
 public:
     bool isRunning;
     int cnt = 0;

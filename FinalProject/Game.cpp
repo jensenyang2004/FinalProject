@@ -618,8 +618,7 @@ void Game :: show_image(object& object){
 }
 
 void Game :: event(int a){
-        
-    
+
     if(a == 2){
         Progress.Ending();
         if(Progress.ending){
@@ -630,13 +629,7 @@ void Game :: event(int a){
             }
         }
     }else if(a == 3){
-        SDL_Surface* tmpsurface = IMG_Load("");
-        SDL_Surface* number[4];
-        char* number1 = "0";
-        number[0] = TTF_RenderText_Solid(font, number1, textColor);
-        char* number2 = "0";
-        number[1]  = TTF_RenderText_Solid(font, number2, textColor);
-        Progress.Lock(1209);
+                Progress.Lock(1209);
         if(Progress.lock){
             Progress.key = true;
         }
@@ -649,4 +642,19 @@ void Game :: event(int a){
     }else if(a == 7){
         Progress.Photo(7);
     }
+}
+
+void Game :: lock(){
+    SDL_Surface* tmpsurface = IMG_Load("");
+    SDL_Surface* number[4];
+    char* number1 = "0";
+    number[0] = TTF_RenderText_Solid(font, number1, textColor);
+    char* number2 = "0";
+    number[1]  = TTF_RenderText_Solid(font, number2, textColor);
+    char* number3 = "0";
+    number[2]  = TTF_RenderText_Solid(font, number2, textColor);
+    char* number4 = "0";
+    number[3]  = TTF_RenderText_Solid(font, number2, textColor);
+    
+
 }
