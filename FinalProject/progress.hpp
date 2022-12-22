@@ -14,9 +14,10 @@
 
 class progress{
 public:
-    int lock = 1209;
+    int lock = 630;
     bool lock_determine = false;
-    
+    bool boo_1 = true, boo2 = true, boo3 = true;
+
     bool ending = false;
     
     bool key = false;
@@ -37,22 +38,21 @@ public:
     }
     void Photo(int a){
        
-        bool boo_1 = true, boo2 = true, boo3 = true;
-        switch (a) {
+                switch (a) {
             case 5:
-                boo_1 = false;
                 if(!boo_1)
                 photo_amount++;
+                        boo_1 = true;
                 break;
             case 6:
-                boo2 = false;
                 if(!boo2)
                 photo_amount++;
+                        boo2 = true;
                 break;
             case 7:
-                boo3 = false;
                 if(!boo3)
                 photo_amount++;
+                        boo3 = true;
                 break;
             default:
                 break;

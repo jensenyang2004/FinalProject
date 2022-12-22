@@ -564,8 +564,6 @@ void Game :: cat_fall(int key){
         tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/cat_fall_left/2.png");
     }
     cat = SDL_CreateTextureFromSurface(renderer, tmp);
-    //int delay = 20;
-    //int i = 0;
     while(true){
         int ground = floor;
         //i++;
@@ -617,6 +615,36 @@ void Game :: show_image(object& object){
     }
 }
 
+void Game :: key(){
+    TTF_Font* font = TTF_OpenFont("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 25);
+    SDL_Color textColor = {0, 0, 0, 255};
+
+    SDL_Surface* tmpsurface = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/keeey.png");
+    SDL_Surface* textsurface = TTF_RenderText_Solid(font, "you've found a key in the drawer.", textColor);
+    textTexture = SDL_CreateTextureFromSurface(renderer, textsurface);
+    SDL_Texture* key = SDL_CreateTextureFromSurface(renderer, tmpsurface);
+    SDL_Rect key_rect = {448, 0, 384, 384};
+    textRect = {300, 450, textsurface->w, textsurface->h};
+    bg[background_index-1].change_background(renderer);
+    SDL_RenderCopy(renderer, key, NULL, &key_rect);
+    SDL_RenderCopy(renderer, dialogue, NULL, &dialogue_Rect);
+    SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+    
+    SDL_RenderPresent(renderer);
+    SDL_Event event;
+
+    while(true){
+        if(SDL_PollEvent(&event)){
+            if(SDL_KEYDOWN == event.type){
+                if(SDL_SCANCODE_SPACE == event.key.keysym.scancode){
+                    break;
+                }
+            }
+        }
+    }
+    
+}
+
 void Game :: event(int a){
 
     if(a == 2){
@@ -630,22 +658,49 @@ void Game :: event(int a){
         }
     }else if(a == 3){
         lock();
-        Progress.Lock(1209);
         if(Progress.lock){
             Progress.key = true;
+        }
+        if(Progress.key){
+            key();
         }
     }else if(a == 4){
         
     }else if(a == 5){
         Progress.Photo(5);
-        //photo();
+        photo();
     }else if(a == 6){
         Progress.Photo(6);
-        //photo();
+        photo();
     }else if(a == 7){
         Progress.Photo(7);
-        //photo();
+        photo();
+       
     }
+}
+
+void Game :: photo(){
+    SDL_Texture* photo;
+    SDL_Surface* photos[3];
+    photos[0] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/photo3.png");
+    photos[1] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/photo2.png");
+    photos[2] = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/photo3.png");
+    photo = SDL_CreateTextureFromSurface(renderer, photos[Progress.photo_amount-1]);
+    SDL_Rect photo_rect = {256, 0, 768, 768};
+    bg[background_index-1].change_background(renderer);
+    SDL_RenderCopy(renderer, photo, NULL, &photo_rect);
+    SDL_RenderPresent(renderer);
+    SDL_Event event;
+    while(true){
+        if(SDL_PollEvent(&event)){
+            if(SDL_KEYDOWN == event.type){
+                if(SDL_SCANCODE_SPACE == event.key.keysym.scancode){
+                    break;
+                }
+            }
+        }
+    }
+
 }
 
 void Game :: lock(){
@@ -689,10 +744,24 @@ void Game :: lock(){
     SDL_Event event;
 
     while(true){
+        
+        if(Progress.lock_determine){
+            SDL_Delay(30);
+            tmpsurface = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/locking2.png");
+            lock_image = SDL_CreateTextureFromSurface(renderer, tmpsurface);
+            bg[background_index-1].change_background(renderer);
+            SDL_RenderCopy(renderer, lock_image, NULL, &lock_rect);
+            SDL_RenderCopy(renderer, number_image[0], NULL, &number_rect[0]);
+            SDL_RenderCopy(renderer, number_image[1], NULL, &number_rect[1]);
+            SDL_RenderCopy(renderer, number_image[2], NULL, &number_rect[2]);
+            SDL_RenderCopy(renderer, number_image[3], NULL, &number_rect[3]);
+            SDL_RenderPresent(renderer);
+        }
+        
         number[0] = TTF_RenderText_Solid(font, number1, textColor);
         number[1]  = TTF_RenderText_Solid(font, number2, textColor);
-        number[2]  = TTF_RenderText_Solid(font, number2, textColor);
-        number[3]  = TTF_RenderText_Solid(font, number2, textColor);
+        number[2]  = TTF_RenderText_Solid(font, number3, textColor);
+        number[3]  = TTF_RenderText_Solid(font, number4, textColor);
         
         number_image[0] = SDL_CreateTextureFromSurface(renderer, number[0]);
         number_image[1] = SDL_CreateTextureFromSurface(renderer, number[1]);
@@ -737,6 +806,8 @@ void Game :: lock(){
                         number4[0] = static_cast<char>(number_number[3] + 48);
                     }
                 }
+                int password =number_number[0]*1000 + number_number[1]*100 + number_number[2]*10 + number_number[3];
+                Progress.Lock(password);
             }
         }
     }

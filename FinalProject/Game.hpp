@@ -65,6 +65,7 @@ public:
     void loading_scene();
     
     void lock();
+    void key();
     void bowl();
     void photo();
     void ending();
