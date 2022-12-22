@@ -19,7 +19,6 @@ SDL_Texture* dialogue;
 SDL_Rect srcR, destR;
 SDL_Rect dialogue_Rect = {250, 400, 800, 200};
 SDL_Rect textRect = {250, 400, 500, 200};
-//SDL_Rect buttonRect = {0, 0, 300, 75};
 
 TTF_Font* font = TTF_OpenFont("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 25);
 SDL_Color textColor = {0, 0, 0, 255};
@@ -161,7 +160,7 @@ void Game :: check_boundary(){
         }else
             cat_posx = bg[background_index-1].left_bound;
     }
-    }
+}
 
 
 void Game :: render(){
@@ -351,7 +350,6 @@ void Game :: init_background(){
     dialogue_1_1[0] = "Is there anything special?";
     dialogue_1_1[1] = "Oh, it's a piece of picture.";
     dialogues_1[0] = dialogue_1_1;
-    bg[0].objects[0].init_set_index(2);
     
     string* dialogue_1_2 = new string[1];
     dialogue_1_2[0] = "The door is locked...";
@@ -364,7 +362,8 @@ void Game :: init_background(){
     bg[0].init_objects(3, posx, posy, posh, posw, length_dialogue_1 , dialogues_1);
     
     bg[0].objects[2].init_image("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/micelaneous/bowl.png");
-    
+    bg[0].objects[0].init_set_index(2);
+
     
     int posx_2[5] = {532, 112, 358, 532, 970};
     int posy_2[5] = {130, 261, 327, 422, 350};
@@ -454,6 +453,10 @@ void Game :: show_dialogue(object& objects){
         SDL_Surface* textSurface = TTF_RenderText_Solid(font, "", textColor);
         textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
         show_image(objects);
+    }
+    
+    if(objects.has_event){
+        event(objects.plot_determine);
     }
 }
 
@@ -609,5 +612,29 @@ void Game :: show_image(object& object){
             }
         }
     }
+}
 
+void Game :: event(int a){
+    switch (a) {
+        case 1:
+            
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
+            break;
+        case 5:
+            Progress.Photo(5);
+            break;
+        case 6:
+            Progress.Photo(6);
+            break;
+        case 7:
+            Progress.Photo(7);
+            break;
+        default:
+            break;
+    }
 }

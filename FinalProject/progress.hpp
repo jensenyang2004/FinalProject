@@ -33,9 +33,28 @@ public:
             ending = true;
         }
     }
-    
-    void Photo(){
-        photo_amount++;
+    void Photo(int a){
+       
+        bool boo_1 = true, boo2 = true, boo3 = true;
+        switch (a) {
+            case 5:
+                boo_1 = false;
+                if(!boo_1)
+                photo_amount++;
+                break;
+            case 6:
+                boo2 = false;
+                if(!boo2)
+                photo_amount++;
+                break;
+            case 7:
+                boo3 = false;
+                if(!boo3)
+                photo_amount++;
+                break;
+            default:
+                break;
+        }
         if(photo_amount == 3){
             photo = true;
         }

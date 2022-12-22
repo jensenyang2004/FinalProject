@@ -60,6 +60,7 @@ public:
     void game_start_update(bool button_key);
     void game_start_render();
     bool game_check(int x, int y);
+    void event(int a);
     
     void loading_scene();
     
