@@ -71,6 +71,7 @@ public:
     void ending();
     
     void disappear();
+    void final_ending();
     
 public:
     bool isRunning;

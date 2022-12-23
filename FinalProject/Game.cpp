@@ -333,9 +333,9 @@ void Game :: cat_jump_success(int i, int key){
 
 void Game :: init_background(){
     char path[1000] = "/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/1.png";
-    for(int i = 1;i < 3;i++){
-        path[strlen(path)-5] = static_cast<char>(i+49);
-        bg[i-1].init(renderer, path);
+    for(int i = 0;i < 3;i++){
+        path[strlen(path)-5] = static_cast<char>(i+1+49);
+        bg[i].init(renderer, path);
     }
     
     int posx[3] = {380, 0, 850};
@@ -352,7 +352,7 @@ void Game :: init_background(){
     dialogues_1[0] = dialogue_1_1;
     
     string* dialogue_1_2 = new string[1];
-    dialogue_1_2[0] = "The door is locked...";
+    dialogue_1_2[0] = "This is the door to outside...";
     dialogues_1[1] = dialogue_1_2;
     
     string* dialogue_1_3 = new string[1];
@@ -628,6 +628,7 @@ void Game :: key(){
     SDL_Rect key_rect = {448, 0, 384, 384};
     textRect = {300, 450, textsurface->w, textsurface->h};
     bg[background_index-1].change_background(renderer);
+    SDL_RenderCopy(renderer, cat, NULL, &destR);
     SDL_RenderCopy(renderer, key, NULL, &key_rect);
     SDL_RenderCopy(renderer, dialogue, NULL, &dialogue_Rect);
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
@@ -651,13 +652,8 @@ void Game :: event(int a){
 
     if(a == 2){
         Progress.Ending();
-        if(Progress.ending){
-            if(Progress.photo){
-                cout << "happy ending" << endl;
-            }else{
-                cout << "bad ending" << endl;
-            }
-        }
+        ending();
+        final_ending();
     }else if(a == 3){
         lock();
         if(Progress.lock){
@@ -680,6 +676,7 @@ void Game :: event(int a){
     }else if(a == 8){
         disappear();
     }
+    
 }
 
 void Game :: photo(){
@@ -691,6 +688,7 @@ void Game :: photo(){
     photo = SDL_CreateTextureFromSurface(renderer, photos[Progress.photo_amount-1]);
     SDL_Rect photo_rect = {256, 0, 768, 768};
     bg[background_index-1].change_background(renderer);
+    SDL_RenderCopy(renderer, cat, NULL, &destR);
     SDL_RenderCopy(renderer, photo, NULL, &photo_rect);
     SDL_RenderPresent(renderer);
     SDL_Event event;
@@ -772,6 +770,7 @@ void Game :: lock(){
         number_image[3] = SDL_CreateTextureFromSurface(renderer, number[3]);
 
         bg[background_index-1].change_background(renderer);
+        SDL_RenderCopy(renderer, cat, NULL, &destR);
         SDL_RenderCopy(renderer, lock_image, NULL, &lock_rect);
         SDL_RenderCopy(renderer, number_image[0], NULL, &number_rect[0]);
         SDL_RenderCopy(renderer, number_image[1], NULL, &number_rect[1]);
@@ -828,7 +827,104 @@ void Game :: disappear(){
         SDL_Delay(300);
         gone_texture = SDL_CreateTextureFromSurface(renderer, gone_surface[i]);
         bg[background_index-1].change_background(renderer);
+        SDL_RenderCopy(renderer, cat, NULL, &destR);
         SDL_RenderCopy(renderer, gone_texture, NULL, &gone_rect);
         SDL_RenderPresent(renderer);
     }
 }
+
+void Game :: ending(){
+    TTF_Font* font = TTF_OpenFont("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 25);
+    SDL_Color textColor = {0, 0, 0, 255};
+    if(!Progress.ending){
+        SDL_Surface* ending_dialogue = TTF_RenderText_Solid(font, "The door is locked...", textColor);
+        textTexture = SDL_CreateTextureFromSurface(renderer, ending_dialogue);
+        textRect = {300, 450, ending_dialogue -> w, ending_dialogue -> h};
+        bg[background_index-1].change_background(renderer);
+        SDL_RenderCopy(renderer, dialogue, NULL, &dialogue_Rect);
+        SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+        SDL_RenderPresent(renderer);
+        SDL_Event event;
+        while(true){
+            if(SDL_PollEvent(&event)){
+                if(SDL_KEYDOWN == event.type){
+                    if(SDL_SCANCODE_SPACE == event.key.keysym.scancode){
+                        break;
+                    }
+                }
+            }
+        }
+    }else{
+        SDL_Surface* ending_dialogue = TTF_RenderText_Solid(font, "You unlock the door...", textColor);
+        textTexture = SDL_CreateTextureFromSurface(renderer, ending_dialogue);
+        textRect = {300, 450, ending_dialogue -> w, ending_dialogue -> h};
+        bg[background_index-1].change_background(renderer);
+        SDL_RenderCopy(renderer, dialogue, NULL, &dialogue_Rect);
+        SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+        SDL_RenderCopy(renderer, cat, NULL, &destR);
+        SDL_RenderPresent(renderer);
+        SDL_Event event;
+        while(true){
+            if(SDL_PollEvent(&event)){
+                if(SDL_KEYDOWN == event.type){
+                    if(SDL_SCANCODE_SPACE == event.key.keysym.scancode){
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void Game :: final_ending(){
+    SDL_Surface* ending_dialogue;
+    destR = {565, 150, 150, 150};
+    if(Progress.photo){
+        TTF_Font* font = TTF_OpenFont("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 25);
+        SDL_Color textColor = {0, 0, 0, 255};
+        string final_dialogue[3] = { "I think he's ready...",
+            "having a life without me...",
+            "now I must leave."};
+        for(int i = 0;i < 3;i++){
+            char tmparray[final_dialogue[i].length() + 1];
+            strcpy(tmparray, final_dialogue[i].c_str());
+            ending_dialogue = TTF_RenderText_Solid(font, tmparray, textColor);
+            textTexture = SDL_CreateTextureFromSurface(renderer, ending_dialogue);
+            textRect = {300, 450, ending_dialogue -> w, ending_dialogue -> h};
+            bg[2].change_background(renderer);
+            SDL_RenderCopy(renderer, cat, NULL, &destR);
+            SDL_RenderCopy(renderer, dialogue, NULL, &dialogue_Rect);
+            SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+            SDL_RenderPresent(renderer);
+            SDL_Event event;
+            int k = 0;
+            while(true){
+                SDL_Delay(30);
+                cat_walk_left(k);
+                k++;
+                if(k >= 8) k = 0;
+                bg[2].change_background(renderer);
+                SDL_RenderCopy(renderer, cat, NULL, &destR);
+                SDL_RenderCopy(renderer, dialogue, NULL, &dialogue_Rect);
+                SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+                SDL_RenderPresent(renderer);
+                if(SDL_PollEvent(&event)){
+                    if(SDL_KEYDOWN == event.type){
+                        if(SDL_SCANCODE_SPACE == event.key.keysym.scancode){
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+    }else{
+        char* final_dialogue[5] = { "I don't think he's ready...",
+            "having a life without me..."
+            "...", "...", "still I have to go..."};
+        for(int i = 0;i < 5;i++){
+            
+        }
+    }
+}
+

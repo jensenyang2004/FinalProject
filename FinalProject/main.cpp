@@ -43,14 +43,14 @@ int main(int argc, const char* argv[]){
 
     game -> init("Cat", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, false);
     game -> game_start_init();
-    SDL_Event event;
+    SDL_Event event1;
     bool start_game = false;
     int key = 1;
     while(game -> running()){
         if(!start_game){
             game -> game_start_render();
-            if(SDL_PollEvent(&event)){
-                if(SDL_MOUSEBUTTONDOWN == event.type){
+            if(SDL_PollEvent(&event1)){
+                if(SDL_MOUSEBUTTONDOWN == event1.type){
                     int x, y;
                     SDL_GetMouseState(&x, &y);
                     if(game -> game_check(x, y)){
@@ -70,6 +70,7 @@ int main(int argc, const char* argv[]){
         }
         
         if(start_game){
+            SDL_Event event;
             bool Keyup = false, Keydown = false, jump = false;
             game -> handleEvents();
             game -> update(false, 0);
