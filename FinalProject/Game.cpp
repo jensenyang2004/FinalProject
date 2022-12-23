@@ -917,7 +917,10 @@ void Game :: final_ending(){
                 }
             }
         }
-        
+        start_game = false;
+        SDL_Surface* tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/ge.jpg");
+        starting_background = SDL_CreateTextureFromSurface(renderer, tmp);
+
     }else if(Progress.ending){
         TTF_Font* font = TTF_OpenFont("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 25);
         SDL_Color textColor = {0, 0, 0, 255};
@@ -956,8 +959,11 @@ void Game :: final_ending(){
                     }
                 }
             }
-            
         }
+        start_game = false;
+        SDL_Surface* tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/be.jpg");
+        starting_background = SDL_CreateTextureFromSurface(renderer, tmp);
+        
     }
 }
 
