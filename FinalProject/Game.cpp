@@ -467,7 +467,7 @@ void Game :: show_dialogue(object& objects){
 
 void Game :: game_start_init(){
 
-    SDL_Surface* tmpsurface = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/starting_background.jpg");
+    SDL_Surface* tmpsurface = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/starting_background2.png");
     //SDL_Surface* tmpsurface = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/starting_background.jpg");
 
     //SDL_Surface* tmpsurface = IMG_Load("./background/starting_background.jpg");
