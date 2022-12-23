@@ -656,7 +656,7 @@ void Game :: event(int a){
         final_ending();
     }else if(a == 3){
         lock();
-        if(Progress.lock){
+        if(Progress.lock_determine){
             Progress.key = true;
         }
         if(Progress.key){
