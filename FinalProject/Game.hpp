@@ -84,6 +84,7 @@ public:
     int cat_posh = 150, cat_posw = 150;
     int background_index = 1;
     bool interaction = false;
+    bool start_game = false;
     Mix_Music* bgm;
     background bg[2];
 };

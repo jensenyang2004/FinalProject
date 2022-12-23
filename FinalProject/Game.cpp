@@ -879,7 +879,7 @@ void Game :: ending(){
 void Game :: final_ending(){
     SDL_Surface* ending_dialogue;
     destR = {565, 150, 150, 150};
-    if(Progress.photo){
+    if(Progress.photo && Progress.ending){
         TTF_Font* font = TTF_OpenFont("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 25);
         SDL_Color textColor = {0, 0, 0, 255};
         string final_dialogue[3] = { "I think he's ready...",
@@ -918,9 +918,12 @@ void Game :: final_ending(){
             }
         }
         
-    }else{
+    }else if(Progress.ending){
+        TTF_Font* font = TTF_OpenFont("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 25);
+        SDL_Color textColor = {0, 0, 0, 255};
+
         string final_dialogue[5] = { "I don't think he's ready...",
-            "having a life without me..."
+            "having a life without me...",
             "...", "...", "still I have to go..."};
         for(int i = 0;i < 5;i++){
             char tmparray[final_dialogue[i].length() + 1];
@@ -952,6 +955,9 @@ void Game :: final_ending(){
                         }
                     }
                 }
-            }    }
+            }
+            
+        }
+    }
 }
 

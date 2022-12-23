@@ -47,7 +47,7 @@ int main(int argc, const char* argv[]){
     bool start_game = false;
     int key = 1;
     while(game -> running()){
-        if(!start_game){
+        if(!game -> start_game){
             game -> game_start_render();
             if(SDL_PollEvent(&event1)){
                 if(SDL_MOUSEBUTTONDOWN == event1.type){
@@ -56,7 +56,7 @@ int main(int argc, const char* argv[]){
                     if(game -> game_check(x, y)){
                         SDL_Delay(30);
                         game -> loading_scene();
-                        start_game = true;
+                        game -> start_game = true;
                     }
                 }
             }
@@ -69,7 +69,7 @@ int main(int argc, const char* argv[]){
             }
         }
         
-        if(start_game){
+        if(game -> start_game){
             SDL_Event event;
             bool Keyup = false, Keydown = false, jump = false;
             game -> handleEvents();
