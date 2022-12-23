@@ -919,12 +919,39 @@ void Game :: final_ending(){
         }
         
     }else{
-        char* final_dialogue[5] = { "I don't think he's ready...",
+        string final_dialogue[5] = { "I don't think he's ready...",
             "having a life without me..."
             "...", "...", "still I have to go..."};
         for(int i = 0;i < 5;i++){
-            
-        }
-    }
+            char tmparray[final_dialogue[i].length() + 1];
+            strcpy(tmparray, final_dialogue[i].c_str());
+            ending_dialogue = TTF_RenderText_Solid(font, tmparray, textColor);
+            textTexture = SDL_CreateTextureFromSurface(renderer, ending_dialogue);
+            textRect = {300, 450, ending_dialogue -> w, ending_dialogue -> h};
+            bg[2].change_background(renderer);
+            SDL_RenderCopy(renderer, cat, NULL, &destR);
+            SDL_RenderCopy(renderer, dialogue, NULL, &dialogue_Rect);
+            SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+            SDL_RenderPresent(renderer);
+            SDL_Event event;
+            int k = 0;
+            while(true){
+                SDL_Delay(30);
+                cat_walk_left(k);
+                k++;
+                if(k >= 8) k = 0;
+                bg[2].change_background(renderer);
+                SDL_RenderCopy(renderer, cat, NULL, &destR);
+                SDL_RenderCopy(renderer, dialogue, NULL, &dialogue_Rect);
+                SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+                SDL_RenderPresent(renderer);
+                if(SDL_PollEvent(&event)){
+                    if(SDL_KEYDOWN == event.type){
+                        if(SDL_SCANCODE_SPACE == event.key.keysym.scancode){
+                            break;
+                        }
+                    }
+                }
+            }    }
 }
 
