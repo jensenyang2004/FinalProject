@@ -56,12 +56,13 @@ void Game :: init(const char* title, int xpos, int ypos, int width, int height, 
         SDL_Init(SDL_INIT_AUDIO);
         if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
             cout << "ERROR" << Mix_GetError() << std::endl;
-          bgm = Mix_LoadMUS("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/soundtrack/ending.mp3");
+          bgm = Mix_LoadMUS("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/soundtrack/bgm.mp3");
         if (bgm)
         {
            cout << "bgm is ready" << endl;
         }
         Mix_PlayMusic(bgm, -1);
+        
         cout << "Subsystem initialised..." << endl;
         window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
         if(window){
@@ -879,6 +880,17 @@ void Game :: ending(){
 void Game :: final_ending(){
     SDL_Surface* ending_dialogue;
     destR = {565, 150, 150, 150};
+    Mix_Quit();
+    SDL_Init(SDL_INIT_AUDIO);
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+        cout << "ERROR" << Mix_GetError() << std::endl;
+      bgm = Mix_LoadMUS("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/soundtrack/ending.mp3");
+    if (bgm)
+    {
+       cout << "bgm is ready" << endl;
+    }
+    Mix_PlayMusic(bgm, -1);
+
     if(Progress.photo && Progress.ending){
         TTF_Font* font = TTF_OpenFont("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 25);
         SDL_Color textColor = {0, 0, 0, 255};
@@ -917,10 +929,7 @@ void Game :: final_ending(){
                 }
             }
         }
-        start_game = false;
-        SDL_Surface* tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/ge.jpg");
-        starting_background = SDL_CreateTextureFromSurface(renderer, tmp);
-
+        ending_menu();
     }else if(Progress.ending){
         TTF_Font* font = TTF_OpenFont("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 25);
         SDL_Color textColor = {0, 0, 0, 255};
@@ -960,10 +969,38 @@ void Game :: final_ending(){
                 }
             }
         }
-        start_game = false;
-        SDL_Surface* tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/be.jpg");
-        starting_background = SDL_CreateTextureFromSurface(renderer, tmp);
-        
+        ending_menu();
     }
 }
 
+void Game :: ending_menu(){
+    if(Progress.ending && Progress.photo){
+        SDL_Surface* tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/ge.jpg");
+        starting_background = SDL_CreateTextureFromSurface(renderer, tmp);
+        tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/back_to_menu.png");
+        button = SDL_CreateTextureFromSurface(renderer, tmp);
+        SDL_FreeSurface(tmp);
+    }else if(Progress.ending){
+        SDL_Surface* tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/be.jpg");
+        starting_background = SDL_CreateTextureFromSurface(renderer, tmp);
+        tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/back_to_menu.png");
+        button = SDL_CreateTextureFromSurface(renderer, tmp);
+        SDL_FreeSurface(tmp);
+    }
+    button = SDL_CreateTextureFromSurface(renderer, buttonsurface1);
+    game_start_render();
+    SDL_Event event;
+    while(true){
+        if(SDL_PollEvent(&event)){
+            if(SDL_MOUSEBUTTONDOWN == event.type){
+                int x, y;
+                SDL_GetMouseState(&x, &y);
+                if(game_check(x, y)){
+                    SDL_Surface* tmp = IMG_Load("/Users/yangjingcheng/programming_workspace/FinalProject/FinalProject/resources/background/starting_background2.png");                    starting_background = SDL_CreateTextureFromSurface(renderer, tmp);
+                    break;
+                }
+            }
+        }
+    }
+    start_game = false;
+}

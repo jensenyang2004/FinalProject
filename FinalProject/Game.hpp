@@ -72,6 +72,7 @@ public:
     
     void disappear();
     void final_ending();
+    void ending_menu();
     
 public:
     bool isRunning;
